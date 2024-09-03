@@ -325,15 +325,18 @@ def send_Good_Night(to_user, access_token):
 
 # 计算时间间隔
 def calculate_Time_Difference(t1, t2):
+    # 检查 t1 和 t2 的格式是否正确
+    if len(t1) != 5 or t1[2] != ':' or not t1[:2].isdigit() or not t1[3:].isdigit():
+        raise ValueError(f"Invalid time format for t1: {t1}")
+    if len(t2) != 5 or t2[2] != ':' or not t2[:2].isdigit() or not t2[3:].isdigit():
+        raise ValueError(f"Invalid time format for t2: {t2}")
+
     h1 = int(t1[0:2])
-    h2 = int(t2[0:2])
     m1 = int(t1[3:5])
+    h2 = int(t2[0:2])
     m2 = int(t2[3:5])
-    s1 = int(t1[6:8])
-    s2 = int(t2[6:8])
-    d1 = datetime(2024, 1, 1, h1, m1, s1)
-    d2 = datetime(2024, 1, 1, h2, m2, s2)
-    return (d1 - d2).seconds
+    difference = (h2 - h1) * 60 + (m2 - m1)
+    return difference
 
 
 if __name__ == '__main__':
